@@ -12,7 +12,7 @@ public class Main {
         while (!opcMenu){
             System.out.println(" Cadastrar Cliente - 1\n");
             System.out.println(" Realizar Pedido - 2 \n");
-            System.out.println(" Alterar Cadastro - 3 \n");
+            System.out.println(" Alterar Daados do Cliente - 3 \n");
             System.out.println(" Sair - 4 \n");
             int opcao = sc.nextInt();
 
@@ -22,7 +22,7 @@ public class Main {
                     break;
 
                 case 2:
-
+                    realizarPedidos(clientes);
                     break;
 
                 case 3:
@@ -67,7 +67,7 @@ public class Main {
     public static List<Cliente> alterarClientes (List<Cliente> clientes){
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Digite o Nome do Cliente: ");
+        System.out.println("Digite o Nome do Cliente que deseja Alterar: ");
         String nome = sc.nextLine();
 
         Cliente cliente = null;
@@ -89,6 +89,7 @@ public class Main {
         System.out.println(" Idade - 2 \n");
         System.out.println(" Endereco - 3 \n");
         System.out.println(" Sair - 4 \n");
+        sc.reset();
 
         int opcao = sc.nextInt();
 
@@ -120,6 +121,49 @@ public class Main {
 
         return clientes;
 
+    }
+
+    public static List<Cliente> realizarPedidos (List<Cliente> clientes){
+        Scanner sc = new Scanner(System.in);
+        int opcao = 0;
+        System.out.println("Digite o Nome do Cliente: ");
+        String nome = sc.nextLine();
+
+        Cliente cliente = null;
+
+        for( Cliente clienteValor: clientes) {
+            if (clienteValor.getNome().equals(nome)){
+                cliente = clienteValor;
+                break;
+            }
+        }
+        if (cliente == null){
+            System.out.println("Cliente Nao Encontrado");
+            return clientes;
+
+        }
+
+        sc.reset();
+
+        for (int i=0; opcao != 2 ;i++){
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Digite o nome do produto " + i);
+            Pedido pedido = new Pedido(sc.nextLine());
+            cliente.getPedidos().add(pedido);
+            sc.reset();
+            System.out.println("Adicionar mais produtos - 1");
+            System.out.println("Sair - 2");
+            opcao = scan.nextInt();
+            scan.reset();
+        }
+        for (Cliente cliente1: clientes){
+            if (cliente1.getNome().equals(cliente.getNome())){
+                cliente = cliente1;
+                break;
+            }
+        }
+
+        return clientes;
     }
 
 
