@@ -12,7 +12,8 @@ public class Main {
         while (!opcMenu){
             System.out.println(" Cadastrar Cliente - 1\n");
             System.out.println(" Realizar Pedido - 2 \n");
-            System.out.println(" Sair - 3 \n");
+            System.out.println(" Alterar Cadastro - 3 \n");
+            System.out.println(" Sair - 4 \n");
             int opcao = sc.nextInt();
 
             switch (opcao){
@@ -21,10 +22,14 @@ public class Main {
                     break;
 
                 case 2:
-                    alterarClientes(clientes);
+
                     break;
 
                 case 3:
+                    alterarClientes(clientes);
+                    break;
+
+                case 4:
                     return;
             }
         }
