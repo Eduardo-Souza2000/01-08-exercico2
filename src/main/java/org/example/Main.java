@@ -13,7 +13,8 @@ public class Main {
             System.out.println(" Cadastrar Cliente - 1\n");
             System.out.println(" Realizar Pedido - 2 \n");
             System.out.println(" Alterar Daados do Cliente - 3 \n");
-            System.out.println(" Sair - 4 \n");
+            System.out.println(" Consultar pedidos - 4");
+            System.out.println(" Sair - 5 \n");
             int opcao = sc.nextInt();
 
             switch (opcao){
@@ -30,10 +31,18 @@ public class Main {
                     break;
 
                 case 4:
+                    consultarPedidos(clientes);
+                    break;
+                case 5:
                     return;
             }
         }
 
+    }
+    public static void consultarPedidos(List<Cliente> clientes){
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente.getNome());
+        }
     }
 
     public static List<Cliente> cadastrarCliente (List<Cliente> clientes){
@@ -156,16 +165,15 @@ public class Main {
             opcao = scan.nextInt();
             scan.reset();
         }
-        for (Cliente cliente1: clientes){
-            if (cliente1.getNome().equals(cliente.getNome())){
-                cliente = cliente1;
+
+        for(int i = 0; i < clientes.size(); i++){
+            if (clientes.get(i).getNome().equals(cliente.getNome())){
+                clientes.remove(i);
+                clientes.add(cliente);
                 break;
             }
         }
 
         return clientes;
     }
-
-
-
 }
