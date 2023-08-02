@@ -1,5 +1,8 @@
 package org.example;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,14 +13,15 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean opcMenu = false;
         while (!opcMenu){
-            System.out.println(" Cadastrar Cliente - 1");
-            System.out.println(" Realizar Pedido - 2");
-            System.out.println(" Alterar Dados do Cliente - 3");
-            System.out.println(" Consultar pedidos - 4");
-            System.out.println(" Consultar clientes - 5");
-            System.out.println(" Consultar quantidade de pedidos em atendimento - 6");
-            System.out.println(" Consultar quantidade de pedidos encerrados - 7");
-            System.out.println(" Sair - 0");
+            System.out.println("1 - Cadastrar Cliente");
+            System.out.println("2 - Realizar Pedido");
+            System.out.println("3 - Alterar Dados do Cliente");
+            System.out.println("4 - Consultar pedidos");
+            System.out.println("5 - Consultar clientes");
+            System.out.println("6 - Consultar quantidade de pedidos em atendimento");
+            System.out.println("7 - Consultar quantidade de pedidos encerrados");
+            System.out.println("8 - Salvar em arquivo");
+            System.out.println("0 - Sair");
             int opcao = sc.nextInt();
 
             switch (opcao){
@@ -42,9 +46,28 @@ public class Main {
                 case 7:
                     totalDePedidosEncerrados(clientes);
                     break;
+                case 8:
+                    salvarEmArquivo(clientes);
+                    break;
                 case 0:
                     return;
             }
+        }
+    }
+    public static void salvarEmArquivo(List<Cliente> clientes){
+        try{
+            FileWriter fileWriter = new FileWriter("dados.txt");
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            for(Cliente cliente : clientes){
+                printWriter.println(cliente.getNome() + " ");
+                printWriter.println("Endereco:\nRua: "
+                        + cliente.getEndereco().getRua() + "\n"
+                        + "Numero: " + cliente.getEndereco().getNumero());
+                System.out.println(cliente.getNome());
+            }
+            printWriter.close();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
     public static void totalDePedidosEncerrados(List<Cliente> clientes){
@@ -106,8 +129,8 @@ public class Main {
 
             clientes.add(new Cliente(nome, idade, endereco));
 
-            System.out.println("Cadastrar outra pessoa - 1");
-            System.out.println("Sair - 2");
+            System.out.println("1 - Cadastrar outra pessoa");
+            System.out.println("2 - Sair");
             sairCadastro = sc.nextInt();
 
             if(sairCadastro == 2){
@@ -138,10 +161,10 @@ public class Main {
         }
 
         System.out.println("O que deseja Alterar");
-        System.out.println(" Nome - 1");
-        System.out.println(" Idade - 2");
-        System.out.println(" Endereco - 3");
-        System.out.println(" Sair - 4");
+        System.out.println("1 - Nome");
+        System.out.println("2 - Idade");
+        System.out.println("3 - Endereco");
+        System.out.println("4 - Sair");
         sc.reset();
 
         int opcao = sc.nextInt();
@@ -205,8 +228,8 @@ public class Main {
             Pedido pedido = new Pedido(sc.nextLine());
             cliente.getPedidos().add(pedido);
             sc.reset();
-            System.out.println("Adicionar mais produtos - 1");
-            System.out.println("Sair - 2");
+            System.out.println("1 - Adicionar mais produtos");
+            System.out.println("2 - Sair");
             opcao = scan.nextInt();
             scan.reset();
         }
