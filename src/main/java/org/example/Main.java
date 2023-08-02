@@ -10,38 +10,83 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean opcMenu = false;
         while (!opcMenu){
-            System.out.println(" Cadastrar Cliente - 1\n");
-            System.out.println(" Realizar Pedido - 2 \n");
-            System.out.println(" Alterar Daados do Cliente - 3 \n");
+            System.out.println(" Cadastrar Cliente - 1");
+            System.out.println(" Realizar Pedido - 2");
+            System.out.println(" Alterar Dados do Cliente - 3");
             System.out.println(" Consultar pedidos - 4");
-            System.out.println(" Sair - 5 \n");
+            System.out.println(" Consultar clientes - 5");
+            System.out.println(" Consultar quantidade de pedidos em atendimento - 6");
+            System.out.println(" Consultar quantidade de pedidos encerrados - 7");
+            System.out.println(" Sair - 0");
             int opcao = sc.nextInt();
 
             switch (opcao){
                 case 1:
                     cadastrarCliente(clientes);
                     break;
-
                 case 2:
                     realizarPedidos(clientes);
                     break;
-
                 case 3:
                     alterarClientes(clientes);
                     break;
-
                 case 4:
                     consultarPedidos(clientes);
                     break;
                 case 5:
+                    consultarClientes(clientes);
+                    break;
+                case 6:
+                    totalDePedidosEmAtendimento(clientes);
+                    break;
+                case 7:
+                    totalDePedidosEncerrados(clientes);
+                    break;
+                case 0:
                     return;
             }
         }
-
+    }
+    public static void totalDePedidosEncerrados(List<Cliente> clientes){
+        int totalEncerrado = 0;
+        for(Cliente cliente : clientes){
+            for(Pedido pedido : cliente.getPedidos()){
+                if(!pedido.isEmAtendimento()){
+                    totalEncerrado++;
+                }
+            }
+        }
+        System.out.println("Total de pedidos encerrados: " + totalEncerrado);
+    }
+    public static void totalDePedidosEmAtendimento(List<Cliente> clientes){
+        int totalEmAtendimento = 0;
+        for(Cliente cliente : clientes){
+            for(Pedido pedido : cliente.getPedidos()){
+                if(pedido.isEmAtendimento()){
+                    totalEmAtendimento++;
+                }
+            }
+        }
+        System.out.println("Total de pedidos em atendimento: " + totalEmAtendimento);
+    }
+    public static void consultarClientes(List<Cliente> clientes){
+        int i = 0;
+        for(Cliente cliente: clientes){
+            System.out.println("Cliente " + (i  + 1) + " " + cliente.getNome());
+            i++;
+        }
     }
     public static void consultarPedidos(List<Cliente> clientes){
+        int totalDePedidos = 0;
         for (Cliente cliente : clientes) {
-            System.out.println(cliente.getNome());
+            int i = 0;
+            System.out.println("Cliente: " + cliente.getNome());
+            for(Pedido pedido: cliente.getPedidos()){
+                System.out.println("Pedido " + i + 1 + " " + pedido.getProdutos());
+                i++;
+                totalDePedidos++;
+            }
+            System.out.println("\nTotal de pedidos: " + totalDePedidos);
         }
     }
 
@@ -90,36 +135,36 @@ public class Main {
         if (cliente == null){
             System.out.println("Cliente Nao Encontrado");
             return clientes;
-
         }
 
         System.out.println("O que deseja Alterar");
-        System.out.println(" Nome - 1\n");
-        System.out.println(" Idade - 2 \n");
-        System.out.println(" Endereco - 3 \n");
-        System.out.println(" Sair - 4 \n");
+        System.out.println(" Nome - 1");
+        System.out.println(" Idade - 2");
+        System.out.println(" Endereco - 3");
+        System.out.println(" Sair - 4");
         sc.reset();
 
         int opcao = sc.nextInt();
+        sc.nextLine();
 
         switch (opcao){
             case 1:
-                System.out.println(" Digite o Nome \n");
+                System.out.println(" Digite o Nome");
                 cliente.setNome(sc.nextLine());
                 sc.reset();
                 break;
 
             case 2:
-                System.out.println(" Digite a Idade \n");
+                System.out.println(" Digite a Idade");
                 cliente.setIdade(sc.nextInt());
                 sc.reset();
                 break;
 
             case 3:
-                System.out.println(" Digite a Rua \n");
+                System.out.println(" Digite a Rua");
                 cliente.getEndereco().setRua(sc.nextLine());
                 sc.reset();
-                System.out.println(" Digite a Numero \n");
+                System.out.println(" Digite a Numero");
                 cliente.getEndereco().setNumero(sc.nextInt());
                 sc.reset();
                 break;
@@ -156,7 +201,7 @@ public class Main {
 
         for (int i=0; opcao != 2 ;i++){
             Scanner scan = new Scanner(System.in);
-            System.out.println("Digite o nome do produto " + i);
+            System.out.println("Digite o nome do produto " + i + 1);
             Pedido pedido = new Pedido(sc.nextLine());
             cliente.getPedidos().add(pedido);
             sc.reset();
